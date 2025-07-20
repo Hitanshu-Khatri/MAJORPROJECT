@@ -1,0 +1,30 @@
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const Listing = require("../models/listing.js");
+const formattedListings = require("./data.js"); // this should be the formatted file I gave you
+
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
+main()
+  .then(() => console.log("connected to DB"))
+  .catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(MONGO_URL);
+}
+
+const initDB = async () => {
+  await Listing.deleteMany({});
+  
+  // Add a static owner ID to each listing
+  const listingsWithOwner = formattedListings.map(obj => ({
+    ...obj,
+    owner: "687a4330fc4285e567862f9f" // or a real ObjectId from your user collection
+  }));
+
+  await Listing.insertMany(listingsWithOwner);
+  console.log("Data was initialized");
+};
+
+initDB();
