@@ -52,7 +52,7 @@ store.on("error",function(e){
 
 const sessionOptions = {
     store,
-    secret:ocess.env.SECRET,
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
