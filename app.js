@@ -103,7 +103,7 @@ app.get("/demouser",async(req,res)=>{
     res.send(registeredUser);
 });
 app.get("/",(req,res)=>{
-    res.send("Hello I am Root");
+    res.redirect("/listings"); 
 });
 
 app.use("/listings",listingRouter);
