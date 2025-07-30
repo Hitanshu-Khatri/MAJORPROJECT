@@ -21,7 +21,7 @@ const initDB = async () => {
   // Add a static owner ID to each listing
   const listingsWithOwner = formattedListings.map(obj => ({
     ...obj,
-    owner: "687a4330fc4285e567862f9f" // or a real ObjectId from your user collection
+    owner: "687d64f1c952f7b0e34b4e25" // or a real ObjectId from your user collection
   }));
 
   await Listing.insertMany(listingsWithOwner);

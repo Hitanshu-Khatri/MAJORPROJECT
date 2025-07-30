@@ -1,5 +1,5 @@
 const Listing = require("../models/listing.js");
-
+const geocodeLocation = require("../utils/geocode.js");
 
 module.exports.index= async (req,res)=>{
     const allListings = await Listing.find({});
@@ -11,14 +11,17 @@ module.exports.renderNewForm =(req,res)=>{
 };
 
 module.exports.showListing = async(req,res)=>{
-    let {id} =req.params;
+    let {id} = req.params;
     const listing = await Listing.findById(id).populate({path:"reviews",populate:{path:"author"}})
     .populate("owner");
     if(!listing){
         req.flash("error","Listing you requested Does not exist");
         return res.redirect("/listings");
     }
-    res.render("./listings/show.ejs",{listing});
+    const fullAddress = `${listing.location}, ${listing.country}`;
+    const coordinates = await geocodeLocation(fullAddress);
+    res.render("./listings/show.ejs",{listing,lat: coordinates?.lat,
+    lng: coordinates?.lng});
 };
 
 module.exports.createListing =async(req,res,next)=>{
@@ -27,6 +30,8 @@ module.exports.createListing =async(req,res,next)=>{
     let newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image={url,filename};
+   
+   
     await newListing.save();
     req.flash("success","New Listing Created");
     res.redirect("/listings");
