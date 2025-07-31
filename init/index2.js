@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Listing = require("../models/listing.js");
 const formattedListings = require("./data.js"); // this should be the formatted file I gave you
 
-const MONGO_URL = "mongodb+srv://deadpool678:1JrBvcSKAjtbJ5NO@cluster0.fcunfsg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
 
 
 main()
