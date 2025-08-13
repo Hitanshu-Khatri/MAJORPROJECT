@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config()
 }
-
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -20,7 +20,7 @@ const User = require("./models/user.js");
 const listingRouter=require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-
+const Listing = require("./models/listing.js");
 
 
 main()
@@ -81,9 +81,52 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
-  
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/auth/google/callback"
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      // Check if user already exists with Google
+      let user = await User.findOne({ googleId: profile.id });
+
+      if (!user) {
+        // If email exists with local account, optionally link it
+        let existingUser = await User.findOne({ email: profile.emails[0].value });
+        if (existingUser) {
+          existingUser.googleId = profile.id;
+          await existingUser.save();
+          return done(null, existingUser);
+        }
+
+        // Otherwise create a new account
+        user = await User.create({
+          googleId: profile.id,
+          username: profile.emails[0].value,
+          displayName: profile.displayName,
+          email: profile.emails[0].value
+        });
+      }
+
+      return done(null, user);
+    } catch (err) {
+      return done(err, null);
+    }
+  }
+));  
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
 
 app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
@@ -109,7 +152,36 @@ app.get("/",(req,res)=>{
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewsRouter);
 app.use("/",userRouter);
- 
+// Start Google OAuth
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Callback from Google
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.redirect('/'); // redirect wherever you want after login
+  }
+);
+
+ // GET /search?query=delhi
+app.get("/search", async (req, res) => {
+  const query = req.query.query;
+  if (!query) return res.json([]);
+
+  try {
+    const regex = new RegExp(query, "i"); // case-insensitive
+    const results = await Listing.find({
+      $or: [{ title: regex }, { location: regex }, { country: regex }]
+    }).limit(5).select("title _id");
+
+    res.json(results);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json([]);
+  }
+});
 
 //Error handling MIDDLEWARE
 

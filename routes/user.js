@@ -5,7 +5,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const passport = require("passport");
 const { saveRedirectUrl } = require("../middleware.js");
 const userController = require("../controllers/users.js");
-
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 router.route("/signup")
 
 .get(userController.renderSignupForm)
@@ -14,6 +14,9 @@ router.route("/signup")
 router.route("/login")
 .get(userController.renderLoginForm)
 .post(saveRedirectUrl,passport.authenticate("local",{failureRedirect:"/login",failureFlash:true}),userController.login);
+
+
+
 
 
 router.get("/logout",userController.logout);
