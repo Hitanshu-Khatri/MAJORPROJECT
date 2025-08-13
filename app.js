@@ -86,11 +86,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || "https://majorproject-pw18.onrender.com/auth/google/callback",
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-        console.log(process.env.GOOGLE_CALLBACK_URL)
+      console.log("Google OAuth callback URL:", process.env.GOOGLE_CALLBACK_URL);
+      
       // Check if user already exists with Google
       let user = await User.findOne({ googleId: profile.id });
 
@@ -99,6 +100,7 @@ passport.use(new GoogleStrategy({
         let existingUser = await User.findOne({ email: profile.emails[0].value });
         if (existingUser) {
           existingUser.googleId = profile.id;
+          existingUser.displayName = profile.displayName;
           await existingUser.save();
           return done(null, existingUser);
         }
@@ -107,17 +109,18 @@ passport.use(new GoogleStrategy({
         user = await User.create({
           googleId: profile.id,
           username: profile.emails[0].value,
-          displayName: profile.displayName,
-          email: profile.emails[0].value
+          email: profile.emails[0].value,
+          displayName: profile.displayName
         });
       }
 
       return done(null, user);
     } catch (err) {
+      console.error("Google OAuth error:", err);
       return done(err, null);
     }
   }
-));  
+));
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -162,9 +165,11 @@ app.get('/auth/google',
 
 // Callback from Google
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/login', failureFlash: true }),
   (req, res) => {
-    res.redirect('/'); // redirect wherever you want after login
+    // Successful authentication
+    req.flash('success', 'Successfully logged in with Google!');
+    res.redirect('/listings'); // redirect to listings page after login
   }
 );
 
