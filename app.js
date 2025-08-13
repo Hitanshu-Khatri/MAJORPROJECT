@@ -59,6 +59,8 @@ const sessionOptions = {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge:7 * 24 * 60 * 60 * 1000, 
         httpOnly:true,
+        secure: process.env.NODE_ENV === "production", // only secure in prod
+        sameSite: "lax" // needed for OAuth on HTTPS
     }
 };
 
@@ -88,6 +90,7 @@ passport.use(new GoogleStrategy({
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
+        console.log(process.env.GOOGLE_CALLBACK_URL)
       // Check if user already exists with Google
       let user = await User.findOne({ googleId: profile.id });
 
