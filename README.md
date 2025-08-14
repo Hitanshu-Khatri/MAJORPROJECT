@@ -1,6 +1,6 @@
 
 
-# MAJORPROJECT 🏡
+# WANDERLUST 🏡
 
 A robust web application built with Node.js, Express, and MongoDB. This project provides a platform for users to browse, create, and review listings. It features a complete user authentication system, data validation, and a structured error-handling mechanism.
 
