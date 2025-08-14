@@ -1,0 +1,142 @@
+<% layout('./layouts/boilerplate') -%>
+
+    <body>
+
+        <h1>Confirm and Pay</h1>
+        <br><br>
+        <h3>
+            <%= listing.title%>
+        </h3>
+        <!-- Flex wrapper -->
+        <div style="display: flex; gap: 100px; align-items: flex-start;flex-wrap: wrap">
+
+            <!-- Old Card -->
+            <div class="card col-6 listing-card">
+                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+                <div class="card-body">
+                    <br>
+                    <br>
+                    <!-- Row 1: Trip title + nights -->
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4><b>Your Trip</b></h4>
+                        <div class="mb-3">
+                            <label for="checkInDate" class="form-label">Check In</label>
+                            <input type="date" class="form-control" id="checkInDate">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="checkOutDate" class="form-label">Check Out</label>
+                            <input type="date" class="form-control" id="checkOutDate">
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <!-- Row 2: Guests label + number -->
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <p class="card-text mb-0"><b>Guests</b></p>
+                        <div class="input-group input-group-sm" style="width: 120px;">
+                            <button class="btn btn-outline-secondary" type="button" id="minusBtn">−</button>
+                            <input type="text" class="form-control text-center" id="guestsCount" value="1" readonly>
+                            <button class="btn btn-outline-secondary" type="button" id="plusBtn">+</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- New Card -->
+            <div class="card col-6 ms-auto" style="width: 25rem;height:25rem;border:0px">
+                <div class="card-body">
+                    <h4 class="card-title"><b>Your Price</b></h4>
+                    <br>
+                    <p class="card-text">
+                        Price Details
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Nights</p>
+                        <span id="tnights">1</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Total Price</p>
+                        <span>₹<span id="totalPrice">
+                                <%= listing.price.toLocaleString("en-IN") %>
+                            </span></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Taxes</p>
+                        <span>₹<span id="taxes">
+                                <%= (listing.price * 0.18).toLocaleString("en-IN") %>
+                            </span></span>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between fw-bold">
+                        <p class="card-text">Total Amount</p>
+                        <span>₹<span id="totalAmount">
+                                <%= (listing.price + (listing.price * 0.18)).toLocaleString("en-IN") %>
+                            </span></span>
+                    </div>
+                </div>
+                <form method="get" action="" class="bn-btn">
+                    <button class="btn btn-success bn-btn">
+                        Proceed to Payment
+                    </button>
+                </form>
+            </div>
+
+        </div>
+        <script>
+            let guests = 1;
+            let Totalnights = 1;
+
+            const guestsCount = document.getElementById('guestsCount');
+            const minusBtn = document.getElementById('minusBtn');
+            const plusBtn = document.getElementById('plusBtn');
+            const checkInDate = document.getElementById('checkInDate');
+            const checkOutDate = document.getElementById('checkOutDate');
+            const tnights = document.getElementById('tnights');
+            const totalPriceInput = document.getElementById('totalPrice');
+
+            // Get price from server into JS variable
+            const basePrice = <%= listing.price %>;
+            const taxRate = 0.18;
+
+            // Guests increment/decrement
+            minusBtn.addEventListener('click', () => {
+                if (guests > 1) {
+                    guests--;
+                    guestsCount.value = guests;
+                }
+            });
+
+            plusBtn.addEventListener('click', () => {
+                if (guests < 4) {
+                    guests++;
+                    guestsCount.value = guests;
+                }
+            });
+
+            // Date change updates nights & price
+            checkOutDate.addEventListener('change', () => {
+                const difference = new Date(checkOutDate.value) - new Date(checkInDate.value);
+                Totalnights = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+                if (Totalnights > 0) {
+                    tnights.value = Totalnights;
+                    document.querySelector("#tnights").innerText = Totalnights;
+
+                    // Calculate new price
+                    const totalPrice = basePrice * Totalnights;
+                    const totalAmount = totalPrice + (totalPrice * taxRate);
+                    document.querySelector("#totalPrice").innerText = totalPrice.toLocaleString("en-IN");
+                    // Update fields
+                    totalPriceInput.value = totalPrice.toLocaleString("en-IN");
+                    document.querySelector("#taxes").innerText = (totalPrice * taxRate).toLocaleString("en-IN");
+                    document.querySelector("#totalAmount").innerText = totalAmount.toLocaleString("en-IN");
+                }
+            });
+        </script>
+    </body>

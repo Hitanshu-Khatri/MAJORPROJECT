@@ -131,7 +131,13 @@ body{
     padding-right: 0px;
 }
 
-
+.bn-btn{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}
 /* Map */
 #map { 
     width: 100%; 

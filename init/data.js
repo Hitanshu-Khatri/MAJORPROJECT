@@ -10,7 +10,8 @@ const formattedListings = [
     "location": "Gokarna, Karnataka",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Trending"
   },
   {
     "title": "Palm-Lined Beach Cottage",
@@ -23,7 +24,8 @@ const formattedListings = [
     "location": "Varkala, Kerala",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Trending"
   },
   {
     "title": "Hillside Retreat Cabin",
@@ -36,7 +38,8 @@ const formattedListings = [
     "location": "Shimla, Himachal Pradesh",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Mountains"
   },
   {
     "title": "Lakefront Bungalow",
@@ -49,7 +52,8 @@ const formattedListings = [
     "location": "Alappuzha, Kerala",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Boats"
   },
   {
     "title": "Treehouse Hideaway",
@@ -62,7 +66,8 @@ const formattedListings = [
     "location": "Nagaland",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Domes"
   },
   {
     "title": "Poolside Udaipur Villa",
@@ -75,7 +80,8 @@ const formattedListings = [
     "location": "Udaipur, Rajasthan",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Amazing Pools"
   },
   {
     "title": "Tropical Infinity Resort",
@@ -88,7 +94,8 @@ const formattedListings = [
     "location": "Goa Coast",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Amazing Pools"
   },
   {
     "title": "Desert Fort Camp",
@@ -101,7 +108,8 @@ const formattedListings = [
     "location": "Jaisalmer, Rajasthan",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Camping"
   },
   {
     "title": "Backwater Houseboat",
@@ -114,11 +122,12 @@ const formattedListings = [
     "location": "Kumarakom, Kerala",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Boats"
   },
   {
     "title": "Snowy Mountain Lodge",
-    "description": "Cozy lodge in snow‑covered Himalayan woods.",
+    "description": "Cozy lodge in snow-covered Himalayan woods.",
     "image": {
       "url": "https://plus.unsplash.com/premium_photo-1684506397791-ae0f73b01d9b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIzfE04alZiTGJUUndzfHxlbnwwfHx8fHw%3D",
       "filename": "photo-1684506397791-ae0f73b01d9b"
@@ -127,7 +136,8 @@ const formattedListings = [
     "location": "Gulmarg, Jammu & Kashmir",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Arctic"
   },
   {
     "title": "Island Villa Paradise",
@@ -140,7 +150,8 @@ const formattedListings = [
     "location": "Havelock Island, Andaman & Nicobar",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Trending"
   },
   {
     "title": "Riverbank Eco Retreat",
@@ -153,7 +164,8 @@ const formattedListings = [
     "location": "Kabini, Karnataka",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Camping"
   },
   {
     "title": "Himalayan Spa Resort",
@@ -166,7 +178,8 @@ const formattedListings = [
     "location": "Shimla, Himachal Pradesh",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Mountains"
   },
   {
     "title": "Tea Estate Villa",
@@ -179,7 +192,8 @@ const formattedListings = [
     "location": "Darjeeling, West Bengal",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Farms"
   },
   {
     "title": "City Skyline Penthouse",
@@ -192,7 +206,8 @@ const formattedListings = [
     "location": "Bandra, Mumbai",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Iconic cities"
   },
   {
     "title": "Colonial Beach Mansion",
@@ -205,7 +220,8 @@ const formattedListings = [
     "location": "Pondicherry",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Iconic cities"
   },
   {
     "title": "Mountain View Lodge Leh",
@@ -218,7 +234,8 @@ const formattedListings = [
     "location": "Leh, Ladakh",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Mountains"
   },
   {
     "title": "Farmhouse in Nashik",
@@ -231,7 +248,8 @@ const formattedListings = [
     "location": "Nashik, Maharashtra",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Farms"
   },
   {
     "title": "Cliffside Pool Retreat",
@@ -244,7 +262,8 @@ const formattedListings = [
     "location": "Goa, India",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Amazing Pools"
   },
   {
     "title": "Wilderness Jungle Lodge",
@@ -257,9 +276,9 @@ const formattedListings = [
     "location": "Kanha National Park, Madhya Pradesh",
     "country": "India",
     "reviews": [],
-    "owner": "64ac92b832f4df0012345678"
+    "owner": "64ac92b832f4df0012345678",
+    "category": "Camping"
   }
 ];
-
 
 module.exports = formattedListings;

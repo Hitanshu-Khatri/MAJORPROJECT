@@ -1,15 +1,28 @@
 const Listing = require("../models/listing.js");
 const geocodeLocation = require("../utils/geocode.js");
 
-module.exports.index= async (req,res)=>{
-    const allListings = await Listing.find({});
-    res.render("./listings/index.ejs",{allListings});      
+module.exports.index = async (req, res) => {
+    const { category } = req.query;
+    let filter = {};
+    if (category) {
+        filter.category = category;
+    }
+
+    const allListings = await Listing.find(filter);
+
+    // Pass category to the template to optionally show a message or style the active filter
+    res.render("./listings/index.ejs", { allListings, category });
 };
 
 module.exports.renderNewForm =(req,res)=>{
     res.render("./listings/new.ejs");
 };
-
+module.exports.renderBookNowForm = async (req, res) => {
+    const { id } = req.params;
+    const listing = await Listing.findById(id).populate({path:"reviews",populate:{path:"author"}})
+    .populate("owner");
+    res.render("./listings/booknow.ejs", { listing });
+};
 module.exports.showListing = async(req,res)=>{
     let {id} = req.params;
     const listing = await Listing.findById(id).populate({path:"reviews",populate:{path:"author"}})

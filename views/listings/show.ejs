@@ -31,8 +31,14 @@
                     <p class="card-text">
                         <%= listing.country%><br>
                     </p>
-
                 </div>
+                <br>
+                <form method="get" action="/listings/<%=listing._id%>/booknow" class="bn-btn">
+                    <button class="btn btn-danger bn-btn">
+                        Book Now
+                    </button>
+                </form>
+                    
             </div>
 
             <% if(currentUser && listing.owner && listing.owner._id.equals(currentUser._id)){ %>

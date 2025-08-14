@@ -37,6 +37,10 @@ router.route("/:id")
     wrapAsync(listingController.updateListing))
 .delete(isLoggedIn,isOwner,wrapAsync(listingController.destroyListing));
 
+//book route
+router.route("/:id/booknow")
+.get(isLoggedIn, wrapAsync(listingController.renderBookNowForm));
+
 
 //edit Route
 router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
