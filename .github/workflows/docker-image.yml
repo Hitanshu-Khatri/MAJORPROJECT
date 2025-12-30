@@ -1,4 +1,4 @@
-# This workflow builds a Docker image and pushes it to Docker Hub on push to main or devops and then deploys the docker image on EC2 Instance via ssh
+# This workflow builds a Docker image and pushes it to Docker Hub on push to main or devops and then deploys the docker image on EC2 Instance via ssh (UBUNTU)
 name: Build and Push Docker Image
 
 on:
