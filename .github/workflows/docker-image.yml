@@ -1,4 +1,4 @@
-# This workflow builds a Docker image and pushes it to Docker Hub on push to main or devops
+# This workflow builds a Docker image and pushes it to Docker Hub on push to main or devops and then deploys the docker image on EC2 Instance via ssh
 name: Build and Push Docker Image
 
 on:
@@ -44,8 +44,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd majorproject
             docker pull deapool678/majorproject:latest
             docker stop majorproject || true
             docker rm majorproject || true
-            docker run -d --name majorproject -p 80:8080 --env-file .env deapool678/majorproject:latest
+            docker run -d --name majorproject -p 80:8080 --env-file /home/ubuntu/.env deapool678/majorproject:latest
